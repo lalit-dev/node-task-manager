@@ -1,6 +1,6 @@
 const express = require('express')
 const multer = require('multer')
-const sharp = require('sharp')     // uncomment if sharp is installed
+// const sharp = require('sharp')     // uncomment if sharp is installed
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
@@ -107,11 +107,11 @@ const upload = multer({
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
     console.log("Image uploaded", req.file);
     // uncomment if shar is installed properly
-    const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
-    req.user.avatar = buffer
+    // const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
+    // req.user.avatar = buffer
 
     //comment it to use sharp
-    // req.user.avatar = req.file.buffer;
+    req.user.avatar = req.file.buffer;
 
 
     await req.user.save()
