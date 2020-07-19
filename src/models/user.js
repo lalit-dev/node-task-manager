@@ -55,12 +55,17 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
+
+// virtual - execute on schema
+// methods - execute on instance
+
 userSchema.virtual('tasks', {
     ref: 'Task',
     localField: '_id',
     foreignField: 'owner'
 })
 
+// [override toJSON which is javascript function which executes when toStringify is called]
 userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
@@ -72,6 +77,7 @@ userSchema.methods.toJSON = function () {
     return userObject
 }
 
+// trigger on instance
 userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)

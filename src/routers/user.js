@@ -17,6 +17,7 @@ router.post('/users', async (req, res) => {
         const token = await user.generateAuthToken()
         res.status(201).send({ user, token })
     } catch (e) {
+        console.log(e)
         res.status(400).send(e)
     }
 })
@@ -105,7 +106,7 @@ const upload = multer({
 })
 
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
-    console.log("Image uploaded", req.file);
+    // console.log("Image uploaded", req.file);w
     // uncomment if shar is installed properly
     // const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
     // req.user.avatar = buffer
